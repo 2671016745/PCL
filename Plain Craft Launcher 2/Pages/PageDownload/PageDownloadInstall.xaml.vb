@@ -1,5 +1,47 @@
 Public Class PageDownloadInstall
 
+#Region "mc-rs 客户端下载"
+
+    Private DlMcRsUrl As String = "https://github.com/2671016745/mc-rs/releases/latest/download/mc-rs.exe"
+
+    Private Sub BtnDlNeoForge_Click() Handles BtnDlNeoForge.Click
+        PanAccel.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub BtnDlFabric_Click() Handles BtnDlFabric.Click
+        PanAccel.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub AccelDownload(Prefix As String)
+        Try
+            Help.OpenUrl(Prefix & DlMcRsUrl)
+        Catch ex As Exception
+            MyMsgBox("打开下载链接失败：" & ex.Message)
+        End Try
+        PanAccel.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub BtnAccelNone_Click() Handles BtnAccelNone.Click
+        AccelDownload("")
+    End Sub
+    Private Sub BtnAccel1_Click() Handles BtnAccel1.Click
+        AccelDownload("https://ghproxy.com/")
+    End Sub
+    Private Sub BtnAccel2_Click() Handles BtnAccel2.Click
+        AccelDownload("https://mirror.ghproxy.com/")
+    End Sub
+    Private Sub BtnAccel3_Click() Handles BtnAccel3.Click
+        AccelDownload("https://gh-proxy.com/")
+    End Sub
+    Private Sub BtnAccelCustom_Click() Handles BtnAccelCustom.Click
+        AccelDownload(TextAccelCustom.Text)
+    End Sub
+    Private Sub BtnAccelCancel_Click() Handles BtnAccelCancel.Click
+        PanAccel.Visibility = Visibility.Collapsed
+    End Sub
+
+#End Region
+
     Public Sub ControlInit()
         DisabledPageAnimControls.Add(BtnStart)
         LoadOptiFine.State = DlOptiFineListLoader
@@ -502,6 +544,8 @@ Public Class PageDownloadInstall
             Next
             '清空当前
             PanMinecraft.Children.Clear()
+            'mc-rs 定制：其余游戏版本与加载器一律空壳，只保留页面顶部的 mc-rs 下载卡片
+            Return
             '添加最新版本
             Dim CardInfo As New MyCard With {.Title = "最新版本", .Margin = New Thickness(0, 15, 0, 15)}
             Dim PinnedVersions As New List(Of JObject)

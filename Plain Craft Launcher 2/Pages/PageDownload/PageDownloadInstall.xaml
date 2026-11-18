@@ -8,18 +8,41 @@
         <Grid Name="PanAllBack">
             <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
                 <Grid Margin="25,10,25,25" Name="PanInner">
+                    <local:MyCard Title="下载设置" CanSwap="True" IsSwapped="True" Margin="0,15,0,15">
+                        <StackPanel Margin="0,8,0,8">
+                            <local:MyHint Text="下载前建议先确认 Java 版本与内存分配（设置 → 启动器）。" Margin="0,4,0,0" />
+                            <local:MyHint Text="安装 Mod 时大多数需要 Fabric API / Forge 等依赖，缺少会导致 Mod 无法运行。" Margin="0,6,0,0" />
+                            <local:MyHint Text="下载完成后，可在“Mod 下载”页搜索并补装缺失的依赖。" Margin="0,6,0,0" />
+                        </StackPanel>
+                    </local:MyCard>
                     <StackPanel Grid.Row="1" Name="PanMinecraft" Grid.IsSharedSizeScope="True" Margin="0,0,0,-10">
                         <StackPanel.RenderTransform>
                             <TranslateTransform />
                         </StackPanel.RenderTransform>
-                        <local:MyCard Title="下载设置" CanSwap="True" IsSwapped="True" Margin="0,15,0,15">
-                            <StackPanel Margin="0,8,0,8">
-                                <local:MyHint Text="下载前建议先确认 Java 版本与内存分配（设置 → 启动器）。" Margin="0,4,0,0" />
-                                <local:MyHint Text="安装 Mod 时大多数需要 Fabric API / Forge 等依赖，缺少会导致 Mod 无法运行。" Margin="0,6,0,0" />
-                                <local:MyHint Text="下载完成后，可在“Mod 下载”页搜索并补装缺失的依赖。" Margin="0,6,0,0" />
+                    </StackPanel>
+                    <local:MyCard Title="mc-rs 客户端下载" Margin="0,15,0,15">
+                        <StackPanel>
+                            <local:MyHint Text="1.21.1（NeoForge）· Windows 版" Margin="0,4,0,0" />
+                            <local:MyHint Text="https://github.com/2671016745/mc-rs/releases/latest/download/mc-rs.exe" Margin="0,2,0,6" />
+                            <local:MyButton Text="下载 1.21.1 + NeoForge" x:Name="BtnDlNeoForge" HorizontalAlignment="Left" Margin="0,2,0,10" />
+                            <local:MyHint Text="1.21（Fabric）· Windows 版" Margin="0,4,0,0" />
+                            <local:MyHint Text="https://github.com/2671016745/mc-rs/releases/latest/download/mc-rs.exe" Margin="0,2,0,6" />
+                            <local:MyButton Text="下载 1.21 + Fabric" x:Name="BtnDlFabric" HorizontalAlignment="Left" Margin="0,2,0,4" />
+                        </StackPanel>
+                    </local:MyCard>
+                    <Grid x:Name="PanAccel" Visibility="Collapsed" Margin="0,15,0,15">
+                        <local:MyCard Title="选择下载方式">
+                            <StackPanel>
+                                <local:MyButton Text="不使用 GitHub 加速（直连）" x:Name="BtnAccelNone" HorizontalAlignment="Left" Margin="0,4,0,4" />
+                                <local:MyButton Text="ghproxy.com 镜像" x:Name="BtnAccel1" HorizontalAlignment="Left" Margin="0,4,0,4" />
+                                <local:MyButton Text="mirror.ghproxy.com 镜像" x:Name="BtnAccel2" HorizontalAlignment="Left" Margin="0,4,0,4" />
+                                <local:MyButton Text="gh-proxy.com 镜像" x:Name="BtnAccel3" HorizontalAlignment="Left" Margin="0,4,0,4" />
+                                <local:MyTextBox x:Name="TextAccelCustom" Margin="0,8,0,4" />
+                                <local:MyButton Text="使用自定义前缀下载" x:Name="BtnAccelCustom" HorizontalAlignment="Left" Margin="0,4,0,4" />
+                                <local:MyButton Text="取消" x:Name="BtnAccelCancel" HorizontalAlignment="Left" Margin="0,8,0,4" />
                             </StackPanel>
                         </local:MyCard>
-                    </StackPanel>
+                    </Grid>
                     <StackPanel Grid.Row="1" x:Name="PanSelect" Visibility="Collapsed" Opacity="0" IsHitTestVisible="False" Margin="0,0,0,45">
                         <StackPanel.Resources>
                             <Style x:Key="ModifyCompareIcon" TargetType="{x:Type local:MyImage}">
