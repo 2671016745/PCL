@@ -15,7 +15,7 @@
                             <TextBlock Text="下载完成后，可在“Mod 下载”页搜索并补装缺失的依赖。" Margin="0,6,0,0" />
                         </StackPanel>
                     </local:MyCard>
-                    <StackPanel Grid.Row="1" Name="PanMinecraft" Grid.IsSharedSizeScope="True" Margin="0,0,0,-10">
+                    <StackPanel Grid.Row="1" Name="PanMinecraft" Grid.IsSharedSizeScope="True" Margin="0,0,0,-10" IsHitTestVisible="False">
                         <StackPanel.RenderTransform>
                             <TranslateTransform />
                         </StackPanel.RenderTransform>
