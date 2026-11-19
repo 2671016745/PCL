@@ -14,9 +14,16 @@ Public Class PageDownloadInstall
 
     Private Sub AccelDownload(Prefix As String)
         Try
-            OpenWebsite(Prefix & DlMcRsUrl)
+            If String.IsNullOrEmpty(McFolderSelected) Then
+                MyMsgBox("请先在启动页选择 MC 目录")
+                Return
+            End If
+            Dim Url As String = Prefix & DlMcRsUrl
+            Dim Local As String = $"{McFolderSelected}downloads\mc-rs.exe"
+            NetDownloadByLoader(Url, Local)
+            MyMsgBox("下载完成：" & Local)
         Catch ex As Exception
-            MyMsgBox("打开下载链接失败：" & ex.Message)
+            MyMsgBox("下载失败：" & ex.Message)
         End Try
         PanAccel.Visibility = Visibility.Collapsed
     End Sub
