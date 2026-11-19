@@ -23,11 +23,11 @@
                             <local:MyButton Text="下载 1.21 + Fabric" x:Name="BtnDlFabric" HorizontalAlignment="Left" Margin="0,2,0,4" />
                         </StackPanel>
                     </local:MyCard>
-                    <local:MyCard Title="下载设置" CanSwap="True" IsSwapped="True" Margin="0,15,0,15">
+                    <local:MyCard Title="下载说明" CanSwap="True" IsSwapped="True" Margin="0,15,0,15">
                         <StackPanel Margin="25,40,23,15">
-                            <TextBlock Text="下载前建议先确认 Java 版本与内存分配（设置 → 启动器）。" Margin="0,4,0,0" />
-                            <TextBlock Text="安装 Mod 时大多数需要 Fabric API / Forge 等依赖，缺少会导致 Mod 无法运行。" Margin="0,6,0,0" />
-                            <TextBlock Text="下载完成后，可在“Mod 下载”页搜索并补装缺失的依赖。" Margin="0,6,0,0" />
+                            <local:MyHint Theme="Blue" Text="点击下方「下载」后，可选择加速方式：直连、镜像或自定义前缀。" />
+                            <local:MyHint Theme="Blue" Margin="0,8,0,0" Text="文件会保存到当前 MC 目录的 downloads\mc-rs.exe。" />
+                            <local:MyHint Theme="Blue" Margin="0,8,0,0" Text="1.21.1 对应 NeoForge，1.21 对应 Fabric；两者使用的是同一个客户端程序。" />
                         </StackPanel>
                     </local:MyCard>
                     <Grid x:Name="PanAccel" Visibility="Collapsed" Margin="0,15,0,15">
