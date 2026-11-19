@@ -14,7 +14,7 @@ Public Class PageDownloadInstall
 
     Private Sub AccelDownload(Prefix As String)
         Try
-            Help.OpenUrl(Prefix & DlMcRsUrl)
+            OpenWebsite(Prefix & DlMcRsUrl)
         Catch ex As Exception
             MyMsgBox("打开下载链接失败：" & ex.Message)
         End Try
