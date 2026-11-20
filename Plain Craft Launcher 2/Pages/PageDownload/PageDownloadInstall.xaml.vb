@@ -549,22 +549,11 @@ Public Class PageDownloadInstall
             For Each Pair In Dict.ToList
                 Dict(Pair.Key) = Pair.Value.OrderByDescending(Function(j) j("releaseTime").Value(Of Date)).ToList
             Next
-            '清空当前（保留顶部两张 mc-rs 卡片）
+            '保留顶部两张 mc-rs 卡片，其余按原版逻辑生成版本列表
             While PanMinecraft.Children.Count > 2
                 PanMinecraft.Children.RemoveAt(PanMinecraft.Children.Count - 1)
             End While
-            'mc-rs 定制：其余游戏版本与加载器显示为空壳分组卡片（保留原版卡片结构，无内容）
-            For Each Title In New String() {"最新版本", "正式版", "预览版", "远古版本", "愚人节版本"}
-                Dim Card As New MyCard With {.Title = Title, .Margin = New Thickness(0, 15, 0, 15)}
-                Dim Pan As New StackPanel With {.Margin = New Thickness(20, MyCard.SwapedHeight, 18, 0), .VerticalAlignment = VerticalAlignment.Top}
-                Pan.Children.Add(New TextBlock With {.Text = "暂无内容", .Margin = New Thickness(0, 8, 0, 8)})
-                Card.Children.Add(Pan)
-                Card.SwapControl = Pan
-                Card.IsSwapped = True
-                PanMinecraft.Children.Add(Card)
-            Next
-            Return
-            '添加最新版本
+            '添加最新版本（插在 mc-rs 卡片之后）
             Dim CardInfo As New MyCard With {.Title = "最新版本", .Margin = New Thickness(0, 15, 0, 15)}
             Dim PinnedVersions As New List(Of JObject)
             Dim Release As JObject = Dict("正式版")(0).DeepClone()
@@ -581,7 +570,7 @@ Public Class PageDownloadInstall
             CardInfo.SetContentBuilder(PinnedVersions, '使用 Lambda 转发点击事件，避免 #535
                 Function(Version) McDownloadListItem(Version, Sub(sender, e) MinecraftSelected(sender, e), False))
             CardInfo.BuildContent()
-            PanMinecraft.Children.Insert(0, CardInfo)
+            PanMinecraft.Children.Insert(2, CardInfo)
             '添加其他版本
             For Each Pair As KeyValuePair(Of String, List(Of JObject)) In Dict
                 If Not Pair.Value.Any() Then Continue For
