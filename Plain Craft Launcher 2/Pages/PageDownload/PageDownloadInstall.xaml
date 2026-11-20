@@ -25,11 +25,24 @@
                     </StackPanel>
                     <Grid x:Name="PanAccel" Visibility="Collapsed" Margin="0,0,0,10">
                         <StackPanel>
-                            <local:MyCard Title="选择下载方式" Margin="0,12,0,12">
+                            <local:MyCard Margin="0,12,0,12">
+                                <Grid Margin="15">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <local:MyImage x:Name="ImgMcRsLogo" Width="34" Height="34" VerticalAlignment="Center" Grid.Column="0" />
+                                    <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock x:Name="TextMcRsTitle" Text="mc-rs" FontWeight="SemiBold" />
+                                        <TextBlock x:Name="TextMcRsInfo" Text="Windows 版" FontSize="11" Margin="0,2,0,0" />
+                                    </StackPanel>
+                                </Grid>
+                            </local:MyCard>
+                            <local:MyCard Title="选择下载方式" Margin="0,0,0,12">
                                 <StackPanel Name="PanAccelItems" Margin="15,40,15,15" />
                             </local:MyCard>
-                            <local:MyButton Text="开始下载" x:Name="BtnMcRsStart" HorizontalAlignment="Left" Width="200" Margin="0,4,0,4" />
-                            <local:MyButton Text="返回" x:Name="BtnMcRsBack" HorizontalAlignment="Left" Width="200" Margin="0,4,0,0" />
+                            <local:MyButton Text="开始下载" x:Name="BtnMcRsStart" HorizontalAlignment="Left" Width="220" Margin="0,4,0,4" />
+                            <local:MyButton Text="返回" x:Name="BtnMcRsBack" HorizontalAlignment="Left" Width="220" Margin="0,4,0,0" />
                         </StackPanel>
                     </Grid>
                     <StackPanel Grid.Row="1" x:Name="PanSelect" Visibility="Collapsed" Opacity="0" IsHitTestVisible="False" Margin="0,0,0,45">

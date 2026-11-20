@@ -25,6 +25,10 @@ Public Class PageDownloadInstall
     Private Sub McRsDownloadBegin(Entry As JObject)
         McRsUrl = Entry("url").ToString
         McRsPrefix = ""
+        '顶部版本信息（仿原版详情页）
+        TextMcRsTitle.Text = "mc-rs " & Entry("id").ToString
+        TextMcRsInfo.Text = Entry("lore").ToString
+        ImgMcRsLogo.Logo = PathImage & "Blocks/Grass.png"
         McRsAccelBuild()
         PanMinecraft.Visibility = Visibility.Collapsed
         PanAccel.Visibility = Visibility.Visible
