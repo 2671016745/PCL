@@ -23,16 +23,13 @@
                             <StackPanel Name="PanMcRsItems" Margin="15,40,15,15" />
                         </local:MyCard>
                     </StackPanel>
-                    <Grid x:Name="PanAccel" Visibility="Collapsed" Margin="0,15,0,15">
-                        <local:MyCard Title="选择下载方式">
-                            <StackPanel>
-                                <local:MyButton Text="不使用 GitHub 加速（直连）" x:Name="BtnAccelNone" HorizontalAlignment="Left" Margin="0,4,0,4" />
-                                <local:MyButton Text="ghproxy.com 镜像" x:Name="BtnAccel1" HorizontalAlignment="Left" Margin="0,4,0,4" />
-                                <local:MyButton Text="mirror.ghproxy.com 镜像" x:Name="BtnAccel2" HorizontalAlignment="Left" Margin="0,4,0,4" />
-                                <local:MyButton Text="gh-proxy.com 镜像" x:Name="BtnAccel3" HorizontalAlignment="Left" Margin="0,4,0,4" />
+                    <Grid x:Name="PanAccel" Visibility="Collapsed" Margin="0,12,0,12">
+                        <local:MyCard Title="选择下载方式" CanSwap="False">
+                            <StackPanel Margin="15,40,15,15">
+                                <StackPanel Name="PanAccelItems" />
                                 <local:MyTextBox x:Name="TextAccelCustom" Margin="0,8,0,4" />
                                 <local:MyButton Text="使用自定义前缀下载" x:Name="BtnAccelCustom" HorizontalAlignment="Left" Margin="0,4,0,4" />
-                                <local:MyButton Text="取消" x:Name="BtnAccelCancel" HorizontalAlignment="Left" Margin="0,8,0,4" />
+                                <local:MyButton Text="取消" x:Name="BtnAccelCancel" HorizontalAlignment="Left" Margin="0,8,0,0" />
                             </StackPanel>
                         </local:MyCard>
                     </Grid>

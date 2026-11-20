@@ -23,7 +23,25 @@ Public Class PageDownloadInstall
 
     Private Sub McRsDownloadBegin(Entry As JObject)
         McRsUrl = Entry("url").ToString
+        McRsAccelBuild()
         PanAccel.Visibility = Visibility.Visible
+    End Sub
+
+    ''' <summary>加速方式列表（原版 MyListItem 样式）。</summary>
+    Private Sub McRsAccelBuild()
+        If PanAccelItems Is Nothing Then Return
+        PanAccelItems.Children.Clear()
+        Dim Options = New List(Of (Text As String, Prefix As String)) From {
+            ("不使用 GitHub 加速（直连）", ""),
+            ("ghproxy.com 镜像", "https://ghproxy.com/"),
+            ("mirror.ghproxy.com 镜像", "https://mirror.ghproxy.com/"),
+            ("gh-proxy.com 镜像", "https://gh-proxy.com/")
+        }
+        For Each Opt In Options
+            Dim Entry = New JObject From {{"id", Opt.Text}, {"type", "release"}, {"lore", If(Opt.Prefix = "", "直连 github.com", Opt.Prefix)}, {"releaseTime", DateTime.Now}, {"url", McRsUrl}}
+            Dim Item = McDownloadListItem(Entry, Sub(sender, e) AccelDownload(Opt.Prefix), False).Init()
+            PanAccelItems.Children.Add(Item)
+        Next
     End Sub
 
     Private Sub AccelDownload(Prefix As String)
@@ -44,18 +62,6 @@ Public Class PageDownloadInstall
         PanAccel.Visibility = Visibility.Collapsed
     End Sub
 
-    Private Sub BtnAccelNone_Click() Handles BtnAccelNone.Click
-        AccelDownload("")
-    End Sub
-    Private Sub BtnAccel1_Click() Handles BtnAccel1.Click
-        AccelDownload("https://ghproxy.com/")
-    End Sub
-    Private Sub BtnAccel2_Click() Handles BtnAccel2.Click
-        AccelDownload("https://mirror.ghproxy.com/")
-    End Sub
-    Private Sub BtnAccel3_Click() Handles BtnAccel3.Click
-        AccelDownload("https://gh-proxy.com/")
-    End Sub
     Private Sub BtnAccelCustom_Click() Handles BtnAccelCustom.Click
         AccelDownload(TextAccelCustom.Text)
     End Sub
