@@ -2,13 +2,27 @@ Public Class PageDownloadInstall
 
 #Region "mc-rs 客户端下载"
 
-    Private DlMcRsUrl As String = "https://github.com/2671016745/mc-rs/releases/latest/download/mc-rs.exe"
+    ''' <summary>mc-rs 的两个版本条目（与原版列表项同一套 MyListItem 控件）。</summary>
+    Private Function McRsEntries() As List(Of JObject)
+        Const Url As String = "https://github.com/2671016745/mc-rs/releases/latest/download/mc-rs.exe"
+        Return New List(Of JObject) From {
+            New JObject From {{"id", "1.21.1（NeoForge）"}, {"type", "release"}, {"lore", "Windows 版 · github.com/2671016745/mc-rs/releases"}, {"releaseTime", DateTime.Now}, {"url", Url}},
+            New JObject From {{"id", "1.21（Fabric）"}, {"type", "release"}, {"lore", "Windows 版 · github.com/2671016745/mc-rs/releases"}, {"releaseTime", DateTime.Now}, {"url", Url}}
+        }
+    End Function
 
-    Private Sub BtnDlNeoForge_Click() Handles BtnDlNeoForge.Click
-        PanAccel.Visibility = Visibility.Visible
+    Private Sub McRsBuildItems()
+        If PanMcRsItems Is Nothing OrElse PanMcRsItems.Children.Count > 0 Then Return
+        For Each Entry In McRsEntries()
+            Dim Item = McDownloadListItem(Entry, Sub(sender, e) McRsDownloadBegin(Entry), False).Init()
+            PanMcRsItems.Children.Add(Item)
+        Next
     End Sub
 
-    Private Sub BtnDlFabric_Click() Handles BtnDlFabric.Click
+    Private McRsUrl As String = ""
+
+    Private Sub McRsDownloadBegin(Entry As JObject)
+        McRsUrl = Entry("url").ToString
         PanAccel.Visibility = Visibility.Visible
     End Sub
 
@@ -18,8 +32,10 @@ Public Class PageDownloadInstall
                 MyMsgBox("请先在启动页选择 MC 目录")
                 Return
             End If
-            Dim Url As String = Prefix & DlMcRsUrl
-            Dim Local As String = $"{McFolderSelected}downloads\mc-rs.exe"
+            Dim Url As String = Prefix & McRsUrl
+            Dim Folder As String = $"{McFolderSelected}versions\mc-rs\"
+            Directory.CreateDirectory(Folder)
+            Dim Local As String = $"{Folder}mc-rs.exe"
             NetDownloadByLoader(Url, Local)
             MyMsgBox("下载完成：" & Local)
         Catch ex As Exception
@@ -59,6 +75,7 @@ Public Class PageDownloadInstall
         LoadOptiFabric.State = DlOptiFabricLoader
 
         McDownloadForgeRecommendedRefresh()
+        McRsBuildItems()
     End Sub
 
     Public Overridable Sub LoaderInit() Handles Me.Initialized
