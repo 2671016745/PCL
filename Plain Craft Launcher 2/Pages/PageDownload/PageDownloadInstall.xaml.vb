@@ -20,10 +20,13 @@ Public Class PageDownloadInstall
     End Sub
 
     Private McRsUrl As String = ""
+    Private McRsPrefix As String = ""
 
     Private Sub McRsDownloadBegin(Entry As JObject)
         McRsUrl = Entry("url").ToString
+        McRsPrefix = ""
         McRsAccelBuild()
+        PanMinecraft.Visibility = Visibility.Collapsed
         PanAccel.Visibility = Visibility.Visible
     End Sub
 
@@ -39,9 +42,19 @@ Public Class PageDownloadInstall
         }
         For Each Opt In Options
             Dim Entry = New JObject From {{"id", Opt.Text}, {"type", "release"}, {"lore", If(Opt.Prefix = "", "直连 github.com", Opt.Prefix)}, {"releaseTime", DateTime.Now}, {"url", McRsUrl}}
-            Dim Item = McDownloadListItem(Entry, Sub(sender, e) AccelDownload(Opt.Prefix), False).Init()
+            Dim Item = McDownloadListItem(Entry, Sub(sender, e) McRsPrefix = Opt.Prefix, False).Init()
             PanAccelItems.Children.Add(Item)
         Next
+    End Sub
+
+    Private Sub BtnMcRsStart_Click() Handles BtnMcRsStart.Click
+        AccelDownload(McRsPrefix)
+        BtnMcRsBack_Click()
+    End Sub
+
+    Private Sub BtnMcRsBack_Click() Handles BtnMcRsBack.Click
+        PanAccel.Visibility = Visibility.Collapsed
+        PanMinecraft.Visibility = Visibility.Visible
     End Sub
 
     Private Sub AccelDownload(Prefix As String)

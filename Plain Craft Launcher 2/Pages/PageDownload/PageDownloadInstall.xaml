@@ -23,15 +23,14 @@
                             <StackPanel Name="PanMcRsItems" Margin="15,40,15,15" />
                         </local:MyCard>
                     </StackPanel>
-                    <Grid x:Name="PanAccel" Visibility="Collapsed" Margin="0,12,0,12">
-                        <local:MyCard Title="选择下载方式" CanSwap="False">
-                            <StackPanel Margin="15,40,15,15">
-                                <StackPanel Name="PanAccelItems" />
-                                <local:MyTextBox x:Name="TextAccelCustom" Margin="0,8,0,4" />
-                                <local:MyButton Text="使用自定义前缀下载" x:Name="BtnAccelCustom" HorizontalAlignment="Left" Margin="0,4,0,4" />
-                                <local:MyButton Text="取消" x:Name="BtnAccelCancel" HorizontalAlignment="Left" Margin="0,8,0,0" />
-                            </StackPanel>
-                        </local:MyCard>
+                    <Grid x:Name="PanAccel" Visibility="Collapsed" Margin="0,0,0,10">
+                        <StackPanel>
+                            <local:MyCard Title="选择下载方式" Margin="0,12,0,12">
+                                <StackPanel Name="PanAccelItems" Margin="15,40,15,15" />
+                            </local:MyCard>
+                            <local:MyButton Text="开始下载" x:Name="BtnMcRsStart" HorizontalAlignment="Left" Width="200" Margin="0,4,0,4" />
+                            <local:MyButton Text="返回" x:Name="BtnMcRsBack" HorizontalAlignment="Left" Width="200" Margin="0,4,0,0" />
+                        </StackPanel>
                     </Grid>
                     <StackPanel Grid.Row="1" x:Name="PanSelect" Visibility="Collapsed" Opacity="0" IsHitTestVisible="False" Margin="0,0,0,45">
                         <StackPanel.Resources>
