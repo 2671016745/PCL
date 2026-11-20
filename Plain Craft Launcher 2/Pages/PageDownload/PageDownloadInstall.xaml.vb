@@ -549,8 +549,10 @@ Public Class PageDownloadInstall
             For Each Pair In Dict.ToList
                 Dict(Pair.Key) = Pair.Value.OrderByDescending(Function(j) j("releaseTime").Value(Of Date)).ToList
             Next
-            '清空当前
-            PanMinecraft.Children.Clear()
+            '清空当前（保留顶部两张 mc-rs 卡片）
+            While PanMinecraft.Children.Count > 2
+                PanMinecraft.Children.RemoveAt(PanMinecraft.Children.Count - 1)
+            End While
             'mc-rs 定制：其余游戏版本与加载器显示为空壳分组卡片（保留原版卡片结构，无内容）
             For Each Title In New String() {"最新版本", "正式版", "预览版", "远古版本", "愚人节版本"}
                 Dim Card As New MyCard With {.Title = Title, .Margin = New Thickness(0, 15, 0, 15)}
