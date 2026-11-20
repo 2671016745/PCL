@@ -75,13 +75,6 @@ Public Class PageDownloadInstall
         PanAccel.Visibility = Visibility.Collapsed
     End Sub
 
-    Private Sub BtnAccelCustom_Click() Handles BtnAccelCustom.Click
-        AccelDownload(TextAccelCustom.Text)
-    End Sub
-    Private Sub BtnAccelCancel_Click() Handles BtnAccelCancel.Click
-        PanAccel.Visibility = Visibility.Collapsed
-    End Sub
-
 #End Region
 
     Public Sub ControlInit()
