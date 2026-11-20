@@ -551,7 +551,15 @@ Public Class PageDownloadInstall
             Next
             '清空当前
             PanMinecraft.Children.Clear()
-            'mc-rs 定制：其余游戏版本与加载器一律空壳，只保留页面顶部的 mc-rs 下载卡片
+            'mc-rs 定制：其余游戏版本与加载器显示为空壳分组卡片（保留原版卡片结构，无内容）
+            For Each Title In New String() {"最新版本", "正式版", "预览版", "远古版本", "愚人节版本"}
+                Dim Card As New MyCard With {.Title = Title, .Margin = New Thickness(0, 15, 0, 15)}
+                Dim Pan As New StackPanel With {.Margin = New Thickness(20, MyCard.SwapedHeight, 18, 0), .VerticalAlignment = VerticalAlignment.Top}
+                Card.Children.Add(Pan)
+                Card.SwapControl = Pan
+                Card.IsSwapped = True
+                PanMinecraft.Children.Add(Card)
+            Next
             Return
             '添加最新版本
             Dim CardInfo As New MyCard With {.Title = "最新版本", .Margin = New Thickness(0, 15, 0, 15)}

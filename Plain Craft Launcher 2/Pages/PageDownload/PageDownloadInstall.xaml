@@ -14,13 +14,21 @@
                         </StackPanel.RenderTransform>
                     </StackPanel>
                     <local:MyCard Title="mc-rs 客户端下载" Margin="0,15,0,15">
-                        <StackPanel>
-                            <TextBlock Text="1.21.1（NeoForge）· Windows 版" FontWeight="SemiBold" Margin="0,4,0,0" />
-                            <TextBlock Text="https://github.com/2671016745/mc-rs/releases/latest/download/mc-rs.exe" Margin="0,2,0,6" TextTrimming="CharacterEllipsis" />
-                            <local:MyButton Text="下载 1.21.1 + NeoForge" x:Name="BtnDlNeoForge" HorizontalAlignment="Left" Margin="0,2,0,10" />
-                            <TextBlock Text="1.21（Fabric）· Windows 版" FontWeight="SemiBold" Margin="0,4,0,0" />
-                            <TextBlock Text="https://github.com/2671016745/mc-rs/releases/latest/download/mc-rs.exe" Margin="0,2,0,6" TextTrimming="CharacterEllipsis" />
-                            <local:MyButton Text="下载 1.21 + Fabric" x:Name="BtnDlFabric" HorizontalAlignment="Left" Margin="0,2,0,4" />
+                        <StackPanel Margin="15,40,15,15">
+                            <local:MyCard Margin="0,0,0,10">
+                                <StackPanel Margin="15">
+                                    <TextBlock Text="1.21.1（NeoForge）· Windows 版" FontWeight="SemiBold" />
+                                    <TextBlock Text="https://github.com/2671016745/mc-rs/releases/latest/download/mc-rs.exe" FontSize="11" Margin="0,3,0,8" TextTrimming="CharacterEllipsis" />
+                                    <local:MyButton Text="下载 1.21.1 + NeoForge" x:Name="BtnDlNeoForge" HorizontalAlignment="Left" Width="170" />
+                                </StackPanel>
+                            </local:MyCard>
+                            <local:MyCard>
+                                <StackPanel Margin="15">
+                                    <TextBlock Text="1.21（Fabric）· Windows 版" FontWeight="SemiBold" />
+                                    <TextBlock Text="https://github.com/2671016745/mc-rs/releases/latest/download/mc-rs.exe" FontSize="11" Margin="0,3,0,8" TextTrimming="CharacterEllipsis" />
+                                    <local:MyButton Text="下载 1.21 + Fabric" x:Name="BtnDlFabric" HorizontalAlignment="Left" Width="170" />
+                                </StackPanel>
+                            </local:MyCard>
                         </StackPanel>
                     </local:MyCard>
                     <local:MyCard Title="下载说明" CanSwap="True" IsSwapped="True" Margin="0,15,0,15">
