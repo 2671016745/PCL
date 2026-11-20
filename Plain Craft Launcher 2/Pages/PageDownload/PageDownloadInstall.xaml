@@ -19,7 +19,7 @@
                                 <local:MyHint Theme="Blue" Margin="0,8,0,0" Text="1.21.1 对应 NeoForge，1.21 对应 Fabric；两者使用的是同一个客户端程序。" />
                             </StackPanel>
                         </local:MyCard>
-                        <local:MyCard Title="mc-rs 客户端下载" Margin="0,15,0,15">
+                        <local:MyCard Title="mc-rs 客户端下载" CanSwap="True" IsSwapped="False" Margin="0,15,0,15">
                             <StackPanel Margin="15,40,15,15">
                                 <local:MyCard Margin="0,0,0,10">
                                     <StackPanel Margin="15">

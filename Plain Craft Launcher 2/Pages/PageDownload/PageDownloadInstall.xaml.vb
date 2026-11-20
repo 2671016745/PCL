@@ -557,6 +557,7 @@ Public Class PageDownloadInstall
             For Each Title In New String() {"最新版本", "正式版", "预览版", "远古版本", "愚人节版本"}
                 Dim Card As New MyCard With {.Title = Title, .Margin = New Thickness(0, 15, 0, 15)}
                 Dim Pan As New StackPanel With {.Margin = New Thickness(20, MyCard.SwapedHeight, 18, 0), .VerticalAlignment = VerticalAlignment.Top}
+                Pan.Children.Add(New TextBlock With {.Text = "暂无内容", .Margin = New Thickness(0, 8, 0, 8)})
                 Card.Children.Add(Pan)
                 Card.SwapControl = Pan
                 Card.IsSwapped = True
