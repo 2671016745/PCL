@@ -8,6 +8,10 @@ Public Module ModModpack
     ''' 弹窗要求选择一个整合包文件并进行安装。
     ''' </summary>
     Public Sub ModpackInstall()
+        If RestrictMcDownload Then
+            Hint("为遵守相关法律法规，PCL 不再提供 MC 下载功能，非常抱歉 qwq……", HintType.Red)
+            Return
+        End If
         Dim File As String = Dialogs.SelectFile("选择整合包压缩文件", False, filter:={({"rar", "zip", "mrpack"}, "整合包文件")}).FirstOrDefault() '选择整合包文件
         If String.IsNullOrEmpty(File) Then Return
         RunInThread(
@@ -81,6 +85,7 @@ Public Module ModModpack
                 End If
             End Try
             '执行对应的安装方法
+            If RestrictMcDownload Then Throw New Exception("为遵守相关法律法规，PCL 不再提供 MC 下载功能，非常抱歉 qwq……")
             Select Case PackType
                 Case 0
                     Logger.Info("整合包种类：CurseForge")
@@ -277,7 +282,7 @@ Public Module ModModpack
                     If ModJson("modules").Any Then 'modules 可能返回 null（#1006）
                         Dim ModuleNames = CType(ModJson("modules"), JArray).Select(Function(l) l("name").ToString).ToList
                         If ModuleNames.Contains("META-INF") OrElse ModuleNames.Contains("mcmod.info") OrElse ModuleNames.Contains("fabric.mod.json") OrElse
-                            ModJson?("FileName")?.ToString.EndsWithF(".jar", True) Then
+                            ModJson?("fileName")?.ToString.EndsWithF(".jar", True) Then
                             TargetFolder = "mods" : Type = ResourceTypes.Mod
                         ElseIf ModuleNames.Contains("pack.mcmeta") Then
                             TargetFolder = "resourcepacks" : Type = ResourceTypes.ResourcePack

@@ -1139,10 +1139,16 @@ OnLoaded:
 
 #Region "循环加载每个版本的信息"
         For Each VersionFolderInfo As DirectoryInfo In DirectoryUtils.GetInfo(Folder & "versions").GetDirectories
-            If Not VersionFolderInfo.Exists OrElse Not VersionFolderInfo.EnumerateFiles.Any Then
-                Logger.Info($"跳过空文件夹：{VersionFolderInfo.FullName}")
+            Try
+                If Not VersionFolderInfo.Exists OrElse Not VersionFolderInfo.EnumerateFiles.Any Then
+                    Logger.Info($"跳过空文件夹：{VersionFolderInfo.FullName}")
+                    Continue For
+                End If
+            Catch ex As DirectoryNotFoundException
+                '#9499
+                Logger.Info($"跳过已被移除的实例文件夹：{VersionFolderInfo.FullName}")
                 Continue For
-            End If
+            End Try
             If (VersionFolderInfo.Name = "cache" OrElse VersionFolderInfo.Name = "BLClient" OrElse VersionFolderInfo.Name = "PCL") AndAlso
                 Not FileUtils.Exists(VersionFolderInfo.FullName & "\" & VersionFolderInfo.Name & ".json") Then
                 Logger.Info($"跳过可能不是版本文件夹的项目：{VersionFolderInfo.FullName}")
@@ -2102,7 +2108,7 @@ OnLoaded:
             Dim Time As Date = Version("releaseTime")
             Dim MsgBoxText As String = $"新版本：{VersionName}{vbCrLf}" &
                 If((Date.Now - Time).TotalDays > 1, "更新时间：" & Time.ToString, "更新于：" & StringUtils.FormatTimeSpan(Time - Date.Now, False))
-            Dim MsgResult = MyMsgBox(MsgBoxText, "Minecraft 更新提示", "确定", "下载", If((Date.Now - Time).TotalHours > 3, "更新日志", ""),
+            Dim MsgResult = MyMsgBox(MsgBoxText, "Minecraft 更新提示", "确定", If(RestrictMcDownload, "", "下载"), If((Date.Now - Time).TotalHours > 3, "更新日志", ""),
                 Button3Action:=Sub() McUpdateLogShow(Version))
             '弹窗结果
             If MsgResult = 2 Then
