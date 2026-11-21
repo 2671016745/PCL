@@ -13,42 +13,57 @@ Public Class PageDownloadInstall
 
     Private Sub McRsBuildItems()
         If PanMcRsItems Is Nothing OrElse PanMcRsItems.Children.Count > 0 Then Return
-        For Each Entry In McRsEntries()
-            Dim Item = McDownloadListItem(Entry, Sub(sender, e) McRsDownloadBegin(Entry), False).Init()
-            PanMcRsItems.Children.Add(Item)
-        Next
+        Try
+            For Each Entry In McRsEntries()
+                Dim Item = McDownloadListItem(Entry, Sub(sender, e) McRsDownloadBegin(Entry), False).Init()
+                PanMcRsItems.Children.Add(Item)
+            Next
+        Catch ex As Exception
+            Logger.Error(ex, "构建 mc-rs 列表项失败")
+            Hint("mc-rs 列表构建失败：" & ex.Message, HintType.Red)
+        End Try
     End Sub
 
     Private McRsUrl As String = ""
     Private McRsPrefix As String = ""
 
     Private Sub McRsDownloadBegin(Entry As JObject)
-        McRsUrl = Entry("url").ToString
-        McRsPrefix = ""
-        '顶部版本信息（仿原版详情页）
-        TextMcRsTitle.Text = "mc-rs " & Entry("id").ToString
-        TextMcRsInfo.Text = Entry("lore").ToString
-        ImgMcRsLogo.ActualSource = PathImage & "Blocks/Grass.png"
-        McRsAccelBuild()
-        PanMinecraft.Visibility = Visibility.Collapsed
-        PanAccel.Visibility = Visibility.Visible
+        Try
+            McRsUrl = Entry("url").ToString
+            McRsPrefix = ""
+            '顶部版本信息（仿原版详情页）
+            TextMcRsTitle.Text = "mc-rs " & Entry("id").ToString
+            TextMcRsInfo.Text = Entry("lore").ToString
+            ImgMcRsLogo.ActualSource = PathImage & "Blocks/Grass.png"
+            McRsAccelBuild()
+            PanMinecraft.Visibility = Visibility.Collapsed
+            PanAccel.Visibility = Visibility.Visible
+        Catch ex As Exception
+            Logger.Error(ex, "打开 mc-rs 详情页失败")
+            Hint("打开 mc-rs 详情页失败：" & ex.Message, HintType.Red)
+        End Try
     End Sub
 
     ''' <summary>加速方式列表（原版 MyListItem 样式）。</summary>
     Private Sub McRsAccelBuild()
         If PanAccelItems Is Nothing Then Return
         PanAccelItems.Children.Clear()
-        Dim Options = New List(Of (Text As String, Prefix As String)) From {
-            ("不使用 GitHub 加速（直连）", ""),
-            ("ghproxy.com 镜像", "https://ghproxy.com/"),
-            ("mirror.ghproxy.com 镜像", "https://mirror.ghproxy.com/"),
-            ("gh-proxy.com 镜像", "https://gh-proxy.com/")
-        }
-        For Each Opt In Options
-            Dim Entry = New JObject From {{"id", Opt.Text}, {"type", "release"}, {"lore", If(Opt.Prefix = "", "直连 github.com", Opt.Prefix)}, {"releaseTime", DateTime.Now}, {"url", McRsUrl}}
-            Dim Item = McDownloadListItem(Entry, Sub(sender, e) McRsPrefix = Opt.Prefix, False).Init()
-            PanAccelItems.Children.Add(Item)
-        Next
+        Try
+            Dim Options = New List(Of (Text As String, Prefix As String)) From {
+                ("不使用 GitHub 加速（直连）", ""),
+                ("ghproxy.com 镜像", "https://ghproxy.com/"),
+                ("mirror.ghproxy.com 镜像", "https://mirror.ghproxy.com/"),
+                ("gh-proxy.com 镜像", "https://gh-proxy.com/")
+            }
+            For Each Opt In Options
+                Dim Entry = New JObject From {{"id", Opt.Text}, {"type", "release"}, {"lore", If(Opt.Prefix = "", "直连 github.com", Opt.Prefix)}, {"releaseTime", DateTime.Now}, {"url", McRsUrl}}
+                Dim Item = McDownloadListItem(Entry, Sub(sender, e) McRsPrefix = Opt.Prefix, False).Init()
+                PanAccelItems.Children.Add(Item)
+            Next
+        Catch ex As Exception
+            Logger.Error(ex, "构建加速方式列表失败")
+            Hint("加速方式列表构建失败：" & ex.Message, HintType.Red)
+        End Try
     End Sub
 
     Private Sub BtnMcRsStart_Click() Handles BtnMcRsStart.Click
